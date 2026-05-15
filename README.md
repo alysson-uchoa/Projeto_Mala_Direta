@@ -36,17 +36,17 @@ Tecnologias Utilizadas
 
 Estrutura de Pastas
 Projeto_Mala_Direta/
-├── app.py                      # Arquivo principal da aplicação
-├── templates/                   # Páginas HTML
-│   ├── index.html               # Página inicial
-│   ├── upload.html              # Criação de nova mala
-│   ├── table.html               # Histórico de malas
-│   ├── edit.html                # Edição de registro
-│   └── placeholders.html        # Template dos emails
-├── Registro/                    # Banco de dados local
-│   └── Registro.xlsx            # Planilha com histórico das malas
-└── uploads/                     # Pastas criadas para cada mala
-    └── [nome_arquivo] [folha]/  # Arquivos salvos por campanha
+- app.py                       # Arquivo principal da aplicação
+- templates/                   # Páginas HTML
+   - index.html                # Página inicial
+   - upload.html               # Criação de nova mala
+   - table.html                # Histórico de malas
+   - edit.html                 # Edição de registro
+   - placeholders.html         # Template dos emails
+- Registro/                    # Banco de dados local
+   - Registro.xlsx             # Planilha com histórico das malas
+- uploads/                     # Pastas criadas para cada mala
+   - [nome_arquivo] [folha]/   # Arquivos salvos por campanha
 
 Fluxo de Uso
 1. Na página inicial, clique em "Enviar Nova Mala Direta"
