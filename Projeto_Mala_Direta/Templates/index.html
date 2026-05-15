@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mala Direta - Sistema de Gerenciamento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(145deg, #f4f7fc 0%, #eef2f5 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 24px;
+        }
+
+        .card {
+            max-width: 700px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0f1a24 100%);
+            padding: 2rem 2.5rem;
+            color: white;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-header h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .card-header h1 i {
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 60px;
+            font-size: 1.4rem;
+        }
+
+        .card-header p {
+            margin-top: 8px;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .card-body {
+            padding: 3rem 2.5rem;
+            background: #f9fafc;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .btn-mala {
+            padding: 20px 30px;
+            border: none;
+            border-radius: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            background-color: #004B2C;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-mala i {
+            font-size: 1.3rem;
+        }
+
+        .btn-mala:first-child {
+            margin-bottom: 0;
+        }
+
+        .btn-mala:hover {
+            background-color: #A6193C;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(166, 25, 60, 0.3);
+        }
+
+        .btn-mala-secondary {
+            background-color: #2c7da0;
+        }
+
+        .btn-mala-secondary:hover {
+            background-color: #1f5e7a;
+            box-shadow: 0 8px 20px rgba(44, 125, 160, 0.3);
+        }
+
+        .card-footer {
+            background: #ffffff;
+            padding: 1.2rem;
+            border-top: 1px solid #e2edf2;
+            font-size: 0.8rem;
+            color: #6c8ea0;
+        }
+
+        @media (max-width: 768px) {
+            .card-header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .card-header p {
+                font-size: 0.85rem;
+            }
+            
+            .card-body {
+                padding: 2rem 1.5rem;
+            }
+            
+            .btn-mala {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>
+                    <i class="fas fa-envelope-open-text"></i>
+                    Mala Direta
+                </h1>
+                <p>Gerencie suas campanhas de mala direta de forma simples e eficiente</p>
+            </div>
+            <div class="card-body">
+                <div class="btn-container">
+                    <button class="btn-mala" onclick="window.location.href='/upload'">
+                        <i class="fas fa-upload"></i>
+                        Enviar Nova Mala Direta
+                    </button>
+                    <button class="btn-mala btn-mala-secondary" onclick="window.location.href='/table'">
+                        <i class="fas fa-table-list"></i>
+                        Verificar Malas Salvas
+                    </button>
+                </div>
+            </div>
+            <div class="card-footer">
+                <i class="fas fa-shield-alt"></i> Desenvolvido por Alysson Uchoa</div>
+        </div>
+    </div>
+</body>
+</html>

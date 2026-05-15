@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-mail Automático</title>
+    <style>
+        body {
+            font-family: Calibri, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        
+        table {
+            word-break: break-word;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 2px;
+            text-align: left;
+            border: 1px solid #000;
+        }
+        th {
+            background-color: #004b2c;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Corpo da Mensagem -->
+        <div style="padding: 20px;">
+            {{ corpo_mensagem | safe }}
+        </div>
+        <br>
+        <!-- Tabela do DataFrame -->
+        <div id="tabela-container">
+            {{ tabela_dataframe | safe }}
+        </div>
+    </div>
+</body>
+</html>

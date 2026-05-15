@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Enviar Mala Direta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================ */
+        /* CSS MODERNO - ESTILO VISUAL                  */
+        /* ============================================ */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(145deg, #f4f7fc 0%, #eef2f5 100%);
+            min-height: 100vh;
+            padding: 40px 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 2rem 2.5rem;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1a2a3a;
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2edf2;
+        }
+
+        label {
+            font-weight: 600;
+            color: #1e2f3a;
+            display: block;
+            margin-top: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #cfdfed;
+            border-radius: 1rem;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: white;
+            font-family: inherit;
+        }
+
+        input[type="file"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #2c7da0;
+            box-shadow: 0 0 0 3px rgba(44,125,160,0.2);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            text-transform: none;
+            margin-top: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .radio-group input {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .botao {
+            padding: 14px 24px;
+            width: 100%;
+            border: none;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            background-color: #2c7da0;
+            margin-top: 24px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .botao:hover {
+            background-color: #1f5e7a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+
+        .botao.voltar {
+            background-color: #5f8296;
+            margin-top: 12px;
+        }
+
+        .botao.voltar:hover {
+            background-color: #4a6a7c;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            margin-top: 8px;
+        }
+
+        .toolbar button {
+            padding: 8px 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            background-color: #eef2fa;
+            color: #1e2f3a;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .toolbar button:hover {
+            background-color: #2c7da0;
+            color: white;
+        }
+
+        .toolbar input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: 1px solid #cfdfed;
+            border-radius: 0.8rem;
+            cursor: pointer;
+        }
+
+        #editor {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid #cfdfed;
+            border-radius: 1rem;
+            background: white;
+            font-family: inherit;
+            line-height: 1.6;
+        }
+
+        #editor:focus {
+            outline: none;
+            border-color: #2c7da0;
+            box-shadow: 0 0 0 3px rgba(44,125,160,0.1);
+        }
+
+        /* Estilo para organizar os checkboxes em três colunas */
+        #colunasContainer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        #colunasContainer label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            text-transform: none;
+            margin-top: 0;
+            padding: 6px 0;
+            cursor: pointer;
+        }
+
+        #colunasContainer input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Estilo para organizar as sheets em três colunas */
+        #sheetsContainer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        #sheetsContainer label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            text-transform: none;
+            margin-top: 0;
+            padding: 6px 0;
+            cursor: pointer;
+        }
+
+        #sheetsContainer input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .info-hint {
+            font-size: 0.75rem;
+            color: #6c8ea0;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Estilos para o FAQ */
+        .faq-section {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid #e2edf2;
+        }
+
+        .faq-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1e2f3a;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .faq-title i {
+            color: #2c7da0;
+            font-size: 1.4rem;
+        }
+
+        .faq-sub {
+            color: #6c8ea0;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .faq-item {
+            background: #f9fafc;
+            border-radius: 1rem;
+            border: 1px solid #e2edf2;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .faq-question {
+            background: #ffffff;
+            padding: 1rem 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1c3b48;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: #f1f7fb;
+        }
+
+        .faq-question span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .faq-question i:first-child {
+            color: #2c7da0;
+            font-size: 1.1rem;
+            width: 24px;
+        }
+
+        .toggle-icon {
+            font-size: 0.9rem;
+            color: #8ba9bc;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+            padding: 0 1.3rem;
+            background: #ffffff;
+            color: #4a6a7c;
+            line-height: 1.5;
+            font-size: 0.85rem;
+        }
+
+        .faq-answer.show {
+            max-height: 500px;
+            padding: 0 1.3rem 1rem 1.3rem;
+            border-top: 1px solid #e2edf2;
+        }
+
+        .faq-answer p {
+            margin-top: 0.8rem;
+        }
+
+        .faq-answer ul {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .faq-answer li {
+            margin: 0.3rem 0;
+        }
+
+        .faq-answer code {
+            background: #eef2fa;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #1a5a6e;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 16px;
+            }
+            .container {
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            #colunasContainer,
+            #sheetsContainer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .faq-title {
+                font-size: 1.2rem;
+            }
+            .radio-group {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #colunasContainer,
+            #sheetsContainer {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enviar Nova Mala Direta</h2>
+
+        <form id="textForm" method="POST" action="" enctype="multipart/form-data">
+            <!-- Campo para selecionar o arquivo -->
+            <label for="file">Selecione o arquivo:</label>
+            <input type="file" name="file" id="fileInput" accept=".xlsx, .xls, .csv" required>
+           
+            <!-- Campo para selecionar a folha -->
+            <label>Selecione a folha:</label>
+            <div id="sheetsContainer">
+                <!-- Os radios serão preenchidas dinamicamente aqui -->
+            </div>
+
+            <!-- Campo para selecionar as colunas -->
+            <label>Selecione as colunas para incluir no e-mail:</label>
+            <div id="colunasContainer">
+                <!-- Os checkboxes serão preenchidas dinamicamente aqui -->
+            </div>
+           
+            <label for="caminho">Nome do caminho do arquivo (identificador):</label>
+            <input type="text" name="caminho_arquivo" id="caminho_arquivo" placeholder="Ex: Campanha_2025_01" required>
+           
+            <!-- Nome da coluna do e-mail -->
+            <label for="coluna_email">Nome da coluna do e-mail:</label>
+            <input type="text" name="coluna_email" id="coluna_email" placeholder="Digite o nome da coluna que contém os e-mails" required>
+            <div class="info-hint">Ex: "Email", "E-mail", "EMAIL", "email_cliente"</div>
+           
+            <!-- Nome da coluna do nome do destinatário -->
+            <label for="coluna_nome">Nome da coluna do nome do destinatário:</label>
+            <input type="text" name="coluna_nome_destinatario" id="coluna_nome" placeholder="Digite o nome da coluna do destinatário" required>
+            <div class="info-hint">Ex: "Nome", "Nome do Cliente", "Razão Social", "Gerente"</div>
+
+            <!-- RADIOBOX "ORIGEM DOS DADOS" -->
+            <label>Origem dos dados:</label>
+            <div class="radio-group" id="data-source-group">
+                <label>
+                    <input type="radio" name="data_source" value="file"> Anexar arquivo (Excel/CSV)
+                </label>
+                <label>
+                    <input type="radio" name="data_source" value="dataframe"> Usar DataFrame do arquivo
+                </label>
+                <label>
+                    <input type="radio" name="data_source" value="both"> Ambos (arquivo + dataframe)
+                </label>
+                <label>
+                    <input type="radio" name="data_source" value="none"> Nenhum (apenas texto)
+                </label>
+            </div>
+
+            <!-- Campo para o assunto -->
+            <label for="assunto">Assunto:</label>
+            <input type="text" name="assunto" id="assunto" placeholder="Digite o assunto" required>
+
+            <!-- Opção de teste de envio -->
+            <label>Deseja fazer um teste de envios de e-mail?</label>
+            <div class="radio-group">
+                <label>
+                    <input type="checkbox" name="opcao_teste" value="Sim"> Sim (enviar apenas para meu e-mail)
+                </label>
+            </div>
+
+            <!-- Editor de texto para o corpo do e-mail -->
+            <label for="texto">Corpo do e-mail:</label>
+            <div class="info-hint">
+                <strong>Variáveis disponíveis:</strong> {destinatario} - Nome do destinatário | {dataframe} - Tabela com os dados<br>
+                <strong>Cálculos automáticos:</strong> {sum[coluna]}, {mean[coluna]}, {count[coluna]}, {max[coluna]}, {min[coluna]}<br>
+                <strong>Expressões:</strong> {sum[Vendas]/sum[Quantidade]} (Ticket Médio), {sum[Total]*0.1} (10%)
+            </div>
+            <div class="toolbar">
+                <button type="button" id="boldBtn"><b>Negrito</b></button>
+                <input type="color" id="colorPicker" value="#000000">
+                <span style="font-size: 0.8rem;">Cor do texto</span>
+            </div>
+            <div id="editor" contenteditable="true">Prezado(a) {destinatario},<br><br>{dataframe}<br><br>Resumo da campanha:<br>• Valor total: R$ {sum[Valor]}<br>• Ticket médio: R$ {sum[Valor]/sum[Quantidade]}<br>• Total de registros: {count[Nome]}<br><br>Atenciosamente,</div>
+            <input type="hidden" id="formattedText" name="formattedText">
+
+            <!-- Botão de envio -->
+            <button type="submit" class="botao">Enviar Mensagens</button>
+        </form>
+
+        <!-- Botão para voltar à página inicial -->
+        <button class="botao voltar" onclick="window.location.href='/'">Voltar ao Início</button>
+
+        <!-- SEÇÃO DE FAQ -->
+        <div class="faq-section">
+            <div class="faq-title">
+                <i class="fas fa-circle-question"></i>
+                Perguntas Frequentes (FAQ)
+            </div>
+            <div class="faq-sub">Tire suas dúvidas sobre o envio de mala direta</div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-file-excel"></i> Como enviar uma mala direta?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>1. Selecione um arquivo Excel/CSV com os dados<br>
+                        2. Escolha a folha correta (se houver múltiplas)<br>
+                        3. Marque as colunas que deseja incluir no e-mail<br>
+                        4. Preencha o nome da coluna do e-mail e do destinatário<br>
+                        5. Escolha a origem dos dados (arquivo, dataframe, ambos ou nenhum)<br>
+                        6. Digite o assunto e o corpo do e-mail<br>
+                        7. Clique em "Enviar"</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-table"></i> O que é o {dataframe}?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O <code>{dataframe}</code> é uma variável especial que, quando inserida no corpo do e-mail, será substituída automaticamente por uma tabela HTML contendo os dados do destinatário (apenas as colunas que você selecionou). Esta tabela aparecerá formatada com as cores do sistema. O <code>{dataframe}</code> só aparece no editor quando você seleciona "Usar DataFrame do arquivo" ou "Ambos" como origem dos dados.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-calculator"></i> O que são {sum[coluna]} e {sum[col1]/sum[col2]}?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>São <strong>expressões de cálculo automático</strong> que você pode usar no corpo do e-mail. O sistema (pandas) irá calcular e substituir pelos valores reais do seu DataFrame.</p>
+                        <p><strong>Exemplos:</strong></p>
+                        <ul>
+                            <li><code>{sum[Valor]}</code> → Soma todos os valores da coluna "Valor"</li>
+                            <li><code>{sum[Vendas]/sum[Quantidade]}</code> → Divide a soma de Vendas pela soma de Quantidade (Ticket Médio)</li>
+                            <li><code>{mean[Idade]}</code> → Média da coluna "Idade"</li>
+                            <li><code>{count[Nome]}</code> → Contagem de registros</li>
+                            <li><code>{max[Valor]}</code> → Valor máximo da coluna</li>
+                            <li><code>{min[Valor]}</code> → Valor mínimo da coluna</li>
+                        </ul>
+                        <p><strong>Importante:</strong> Os nomes das colunas devem ser escritos exatamente como estão no seu arquivo (case-sensitive).</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-chart-line"></i> Como calcular Ticket Médio ou outras métricas?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use expressões matemáticas dentro das chaves! Exemplos práticos:</p>
+                        <ul>
+                            <li><strong>Ticket Médio:</strong> <code>{sum[ValorTotal]/sum[QuantidadeItens]}</code></li>
+                            <li><strong>Percentual de conclusão:</strong> <code>{sum[Concluidos]/(sum[Concluidos]+sum[Pendentes])*100}</code></li>
+                            <li><strong>Diferença entre valores:</strong> <code>{sum[Receita]-sum[Custo]}</code></li>
+                            <li><strong>Média ponderada:</strong> <code>{sum[Nota*Peso]/sum[Peso]}</code></li>
+                        </ul>
+                        <p>Você pode usar qualquer operador matemático: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>**</code> (potência) e parênteses.</p>
+                        <p><strong>Dica:</strong> No corpo do e-mail, escreva algo como: "O valor total da campanha é R$ {sum[Valor]}" e o sistema substituirá pelo valor calculado.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-envelope"></i> Posso testar antes de enviar para todos?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim! Marque a opção "Sim" em "Deseja fazer um teste de envios de e-mail?". Assim, os e-mails serão enviados apenas para o seu próprio e-mail, permitindo verificar como a mensagem será exibida antes do envio definitivo.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-file-csv"></i> Quais formatos de arquivo são suportados?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O sistema suporta arquivos nos formatos Excel (.xlsx, .xls) e CSV (.csv). Certifique-se de que a primeira linha do arquivo contenha os cabeçalhos das colunas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-robot"></i> Qual a diferença entre as opções de origem dos dados?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Anexar arquivo:</strong> Usa apenas o arquivo Excel/CSV enviado.<br>
+                        <strong>Usar DataFrame do arquivo:</strong> Gera uma tabela (dataframe) automaticamente a partir do arquivo e das colunas selecionadas.<br>
+                        <strong>Ambos:</strong> Utiliza tanto o arquivo original quanto o dataframe gerado.<br>
+                        <strong>Nenhum:</strong> Envia apenas o texto sem dados da planilha.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-save"></i> Os dados são salvos?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim! Todas as malas diretas enviadas são registradas no sistema e podem ser visualizadas na página "Histórico de Mala Direta", onde você pode consultar, testar novamente ou reenviar campanhas anteriores.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span><i class="fas fa-lightbulb"></i> Dica: Como formatar números e moedas?</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Os valores calculados serão exibidos no formato original. Para valores monetários, sugerimos escrever no corpo do e-mail:</p>
+                        <p><code>R$ {sum[Valor]}</code> → Exibe como "R$ 1234.56"<br>
+                        <code>Total: {round(sum[Valor],2)}</code> → Arredonda para 2 casas decimais</p>
+                        <p>Ou simplesmente: <strong>"O valor total é R$ {sum[Valor]}"</strong> e o número aparecerá. Você também pode usar <code>{int(sum[Valor])}</code> para números inteiros.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById('fileInput');
+        const sheetsContainer = document.getElementById('sheetsContainer');
+        const colunasContainer = document.getElementById('colunasContainer');
+        let currentFile = null;
+
+        // Elementos do radiobox
+        const radioSource = document.querySelectorAll('input[name="data_source"]');
+        const editor = document.getElementById('editor');
+
+        // Função para controlar o {dataframe} no editor
+        function toggleDataframeVariable() {
+            const selected = document.querySelector('input[name="data_source"]:checked');
+            const value = selected ? selected.value : '';
+            
+            if (value === 'dataframe' || value === 'both') {
+                if (editor.innerHTML.indexOf('{dataframe}') === -1) {
+                    const currentHtml = editor.innerHTML;
+                    const lines = currentHtml.split('<br>');
+                    if (lines.length >= 2) {
+                        lines.splice(2, 0, '{dataframe}');
+                        editor.innerHTML = lines.join('<br>');
+                    } else {
+                        editor.innerHTML = currentHtml + '<br>{dataframe}';
+                    }
+                }
+            } else {
+                if (editor.innerHTML.indexOf('{dataframe}') !== -1) {
+                    editor.innerHTML = editor.innerHTML.replace('<br>{dataframe}', '').replace('{dataframe}<br>', '').replace('{dataframe}', '');
+                }
+            }
+        }
+        
+        if (radioSource.length > 0) {
+            radioSource.forEach(radio => {
+                radio.addEventListener('change', toggleDataframeVariable);
+            });
+            toggleDataframeVariable();
+        }
+
+        // Evento para quando o arquivo é selecionado
+        if (fileInput) {
+            fileInput.addEventListener('change', function() {
+                sheetsContainer.innerHTML = '';
+                colunasContainer.innerHTML = '';
+               
+                currentFile = fileInput.files[0];
+                if (!currentFile) return;
+               
+                const formData = new FormData();
+                formData.append('file', currentFile);
+               
+                fetch('/get_sheets', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sheets) {
+                        sheetsContainer.innerHTML = '';
+                       
+                        const radioGroup = document.getElementsByName('sheet_group');
+                        if (radioGroup) {
+                            radioGroup.forEach(radio => radio.checked = false);
+                        }
+                       
+                        data.sheets.forEach(sheet => {
+                            const container = document.createElement('div');
+                            container.className = 'sheet-option';
+                           
+                            const radio = document.createElement('input');
+                            radio.type = 'radio';
+                            radio.name = 'sheet_group';
+                            radio.value = sheet;
+                            radio.id = `sheet_${sheet}`;
+                           
+                            const label = document.createElement('label');
+                            label.htmlFor = `sheet_${sheet}`;
+                            label.textContent = sheet;
+                           
+                            radio.addEventListener('change', function() {
+                                colunasContainer.innerHTML = '';
+                                if (this.checked) loadColumns(sheet);
+                            });
+                           
+                            container.appendChild(radio);
+                            container.appendChild(label);
+                            sheetsContainer.appendChild(container);
+                        });
+                    }
+                    else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao processar o arquivo.');
+                });
+            });
+        }
+
+        function loadColumns(sheetName) {
+            const sheetFormData = new FormData();
+            sheetFormData.append('file', currentFile);
+            sheetFormData.append('sheet_name', sheetName);
+
+            colunasContainer.innerHTML = '<p>Carregando colunas...</p>';
+
+            fetch('/get_columns', {
+                method: 'POST',
+                body: sheetFormData
+            })
+            .then(response => response.json())
+            .then(data => {
+                colunasContainer.innerHTML = '';
+               
+                if (data.columns.length === 0) {
+                    colunasContainer.innerHTML = '<p>Nenhuma coluna encontrada</p>';
+                    return;
+                }
+               
+                colunasContainer.style.cssText = `
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 15px;
+                `;
+               
+                data.columns.forEach(column => {
+                    const columnItem = document.createElement('div');
+                    columnItem.style.display = 'flex';
+                    columnItem.style.alignItems = 'center';
+                   
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `col_${column.replace(/\s/g, '_')}`;
+                    checkbox.name = 'selected_columns';
+                    checkbox.value = column;
+                    checkbox.style.marginRight = '8px';
+                   
+                    const label = document.createElement('label');
+                    label.htmlFor = `col_${column.replace(/\s/g, '_')}`;
+                    label.textContent = column;
+                   
+                    columnItem.appendChild(checkbox);
+                    columnItem.appendChild(label);
+                    colunasContainer.appendChild(columnItem);
+                });
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                colunasContainer.innerHTML = '<p>Erro ao carregar colunas</p>';
+            });
+        }
+
+        function applyBold() {
+            document.execCommand('bold', false, null);
+        }
+
+        function applyColor() {
+            let color = document.getElementById('colorPicker').value;
+            document.execCommand('foreColor', false, color);
+        }
+
+        const boldBtn = document.getElementById('boldBtn');
+        if (boldBtn) boldBtn.addEventListener('click', applyBold);
+        
+        const colorPicker = document.getElementById('colorPicker');
+        if (colorPicker) colorPicker.addEventListener('change', applyColor);
+
+        if (editor) {
+            editor.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    document.execCommand('insertHTML', false, '<div><br></div>');
+                }
+            });
+        }
+
+        // SUBMIT DO FORMULÁRIO - VERSÃO CORRIGIDA
+        const textForm = document.getElementById('textForm');
+        if (textForm) {
+            textForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                let editorHtml = '';
+                if (editor) {
+                    editorHtml = editor.innerHTML;
+                    editorHtml = editorHtml.replace(/<div><br><\/div>/gi, '<br>');
+                    editorHtml = editorHtml.replace(/<div>/gi, '<br>').replace(/<\/div>/gi, '</br>');
+                }
+
+                const formData = new FormData();
+                formData.append('formattedText', editorHtml);
+                
+                // Data source
+                const dataSourceChecked = document.querySelector('input[name="data_source"]:checked');
+                formData.append('data_source', dataSourceChecked ? dataSourceChecked.value : 'file');
+                
+                // Campos do formulário
+                const caminhoArquivo = document.getElementById('caminho_arquivo');
+                if (caminhoArquivo) formData.append('caminho_arquivo', caminhoArquivo.value);
+                
+                const colunaEmail = document.getElementById('coluna_email');
+                if (colunaEmail) formData.append('coluna_email', colunaEmail.value);
+                
+                const colunaNome = document.getElementById('coluna_nome');
+                if (colunaNome) formData.append('coluna_nome_destinatario', colunaNome.value);
+                
+                const assunto = document.getElementById('assunto');
+                if (assunto) formData.append('assunto', assunto.value);
+                
+                // Opção de teste
+                const opcaoTeste = document.querySelector('input[name="opcao_teste"]:checked');
+                if (opcaoTeste) formData.append('opcao_teste', opcaoTeste.value);
+                
+                // Sheet selecionada
+                const sheetSelected = document.querySelector('input[name="sheet_group"]:checked');
+                if (sheetSelected) formData.append('sheet_group', sheetSelected.value);
+                
+                // Arquivo
+                if (fileInput && fileInput.files[0]) {
+                    formData.append('file', fileInput.files[0]);
+                }
+                
+                // Colunas selecionadas
+                const selectedColumns = [];
+                document.querySelectorAll('#colunasContainer input[type="checkbox"]:checked').forEach(cb => {
+                    selectedColumns.push(cb.value);
+                });
+                formData.append('selected_columns', JSON.stringify(selectedColumns));
+                
+                // Mostrar loading
+                const submitBtn = textForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn ? submitBtn.innerHTML : 'Enviar';
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Enviando...';
+                    submitBtn.disabled = true;
+                }
+                
+                fetch('/upload', {
+    method: 'POST',
+    body: formData
+})
+                .then(response => response.json())
+                .then(data => {
+                    if (submitBtn) {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }
+                    if (data.success) {
+                        alert(data.message || 'Enviado com sucesso!');
+                        window.location.href = '/table';
+                    } else {
+                        alert('Erro: ' + (data.error || 'Erro desconhecido'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    if (submitBtn) {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }
+                    alert('Erro ao processar. Verifique o console.');
+                });
+            });
+        }
+    });
+
+	function toggleFAQ(element) {
+    const answer = element.nextElementSibling;
+
+    const isOpen = element.classList.contains('expanded');
+
+    // fecha todos
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.classList.remove('expanded');
+    });
+
+    document.querySelectorAll('.faq-answer').forEach(a => {
+        a.classList.remove('show');
+    });
+
+    // abre o clicado
+    if (!isOpen && answer) {
+        element.classList.add('expanded');
+        answer.classList.add('show');
+    }
+}
+
+</script>
+</body>
+</html>
